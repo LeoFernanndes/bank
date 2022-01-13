@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+
+  bank_api:
+    build:    
+      context: ./bank_api
+      dockerfile: ./Dockerfile
+    restart: always      
+    ports:
+      - '3000'
+    volumes:
+      - ./bank_api/:/usr/app/bank_api
+    depends_on:
+      - mysql
+    networks:
+      - nginx_network
+  
+  mysql:
+    restart: always
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_USER: 'test'
+      MYSQL_PASS: 'pass'
+    volumes:
+      - ./database/mysql-data:/var/lib/mysql
+    ports:
+      - "3306"
+    networks:
+      - nginx_network
+
+  nginx:
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./nginx/logs/:/var/log/nginx/
+    ports:
+      - 80:80
+    networks:
+      - nginx_network
+    depends_on:
+      - bank_api
+
+networks:
+  nginx_network:
+    driver: bridge

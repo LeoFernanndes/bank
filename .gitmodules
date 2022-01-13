@@ -1,0 +1,3 @@
+[submodule "bank_api"]
+	path = bank_api
+	url = https://github.com/LeoFernanndes/bank_api.git
