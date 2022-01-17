@@ -1,6 +1,19 @@
 version: '3'
 
 services:
+  # bank_frontend:
+  #   build:    
+  #     context: ./bank_frontend
+  #     dockerfile: ./Dockerfile
+  #   restart: always      
+  #   ports:
+  #     - '4000'
+  #   volumes:
+  #     - ./bank_frontend/:/usr/app/bank_frontend
+  #   depends_on:
+  #     - mysql
+  #   networks:
+  #     - nginx_network
 
   bank_api:
     build:    
